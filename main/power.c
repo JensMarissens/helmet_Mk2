@@ -24,6 +24,10 @@ void task_1(void *parameters)
     while (1)
     {
         ESP_LOGI("Task 1", "running on Core %d", xPortGetCoreID());
+
+        uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_1);
+        ESP_LOGI("Memory", "Task 1 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
+
         gpio_set_level(GPIO_NUM_2, 1);
         vTaskDelay(1000 / portTICK_PERIOD_MS); // This has to exist to relinquish control back to the scheduler.
         gpio_set_level(GPIO_NUM_2, 0);
@@ -36,25 +40,31 @@ void task_2()
     unsigned int seed_value = (unsigned int)time(NULL);
     srandom(seed_value);
 
-    for (;;) {
+    for (;;)
+    {
+        ESP_LOGI("Task 2", "running on Core %d", xPortGetCoreID());
+
         unsigned int rand1 = random() % 999;
         unsigned int rand2 = random() % 999;
         unsigned int rand = rand1 * rand2;
 
-        ESP_LOGI("Task 2", "running on Core %d", xPortGetCoreID());
+        uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_2);
+        ESP_LOGI("Memory", "Task 2 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
         ESP_LOGI("Task 2", "Random: %u", rand);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
-
 void task_3()
 {
 
     for (;;)
     {
-        ESP_LOGI("Task 3", "running on Core %d", xPortGetCoreID());
+        uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_3);
+        ESP_LOGI("Memory", "Task 3 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
+    
+        ESP_LOGI("Task 3", "running on Core %d", xPortGetCoreID());    
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 }
