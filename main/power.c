@@ -23,7 +23,7 @@ void task_1(void *parameters)
 
     while (1)
     {
-        ESP_LOGI("Task 1", "running on Core %d", xPortGetCoreID());
+        ESP_LOGW("Task 1", "running on Core %d", xPortGetCoreID());
 
         uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_1);
         ESP_LOGI("Memory", "Task 1 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
@@ -49,7 +49,7 @@ void task_2()
         unsigned int rand = rand1 * rand2;
 
         uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_2);
-        ESP_LOGI("Memory", "Task 2 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
+        ESP_LOGW("Memory", "Task 2 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
         ESP_LOGI("Task 2", "Random: %u", rand);
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -62,7 +62,7 @@ void task_3()
     for (;;)
     {
         uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_3);
-        ESP_LOGI("Memory", "Task 3 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
+        ESP_LOGW("Memory", "Task 3 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
     
         ESP_LOGI("Task 3", "running on Core %d", xPortGetCoreID());    
         vTaskDelay(500 / portTICK_PERIOD_MS);
