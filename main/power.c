@@ -23,10 +23,10 @@ void task_1(void *parameters)
 
     while (1)
     {
-        ESP_LOGW("Task 1", "running on Core %d", xPortGetCoreID());
+        ESP_LOGI("Task 1", "running on Core %d", xPortGetCoreID());
 
         uint32_t watermark = uxTaskGetStackHighWaterMark(task_handle_1);
-        ESP_LOGI("Memory", "Task 1 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
+        ESP_LOGW("Memory", "Task 1 Stack High Watermark: %u bytes", (int)watermark * sizeof(StackType_t));
 
         gpio_set_level(GPIO_NUM_2, 1);
         vTaskDelay(1000 / portTICK_PERIOD_MS); // This has to exist to relinquish control back to the scheduler.
