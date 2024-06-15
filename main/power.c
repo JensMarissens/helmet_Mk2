@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #include "power.h"
 #include "driver/gpio.h"
 
@@ -30,13 +33,21 @@ void task_1(void *parameters)
 
 void task_2()
 {
+    unsigned int seed_value = (unsigned int)time(NULL);
+    srandom(seed_value);
 
-    for (;;)
-    {
+    for (;;) {
+        unsigned int rand1 = random() % 999;
+        unsigned int rand2 = random() % 999;
+        unsigned int rand = rand1 * rand2;
+
         ESP_LOGI("Task 2", "running on Core %d", xPortGetCoreID());
+        ESP_LOGI("Task 2", "Random: %u", rand);
+
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
+
 
 void task_3()
 {
@@ -62,7 +73,7 @@ void power_on(void)
         ESP_LOGI("Task 3", "RESUME");
         vTaskDelay(5000 / portTICK_PERIOD_MS);
 
-        ESP_LOGI("Task 3", "SUSPEND");   
+        ESP_LOGI("Task 3", "SUSPEND");
         vTaskSuspend(task_handle_3);
         vTaskDelay(2000 / portTICK_PERIOD_MS);
     }
