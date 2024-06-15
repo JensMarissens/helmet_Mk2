@@ -32,7 +32,7 @@ void task_2()
 
     for (;;)
     {
-        ESP_LOGI("Task 1", "running on Core %d", xPortGetCoreID());
+        ESP_LOGI("Task 2", "running on Core %d", xPortGetCoreID());
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 }
