@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "power.h"
-
+#include "peripherals.h"
 
 // power modes and management
 // alphanumericToBitmap library
